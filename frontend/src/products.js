@@ -4,7 +4,7 @@ const products = [
     name: 'Harry Potter',
     image: '/images/1885.jpg',
     price: 90,
-    countInStock: 30,
+    countInStock: 0,
     rating: 4.5,
     numReviews: 5,
   },
