@@ -8,7 +8,7 @@
   "description": "BookBot website for selling books online",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node backend/server"  
   },
   "repository": {
     "type": "git",
