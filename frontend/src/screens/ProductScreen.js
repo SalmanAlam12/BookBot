@@ -14,7 +14,7 @@ const ProductScreen = () => {
       setProduct(data)
     }
     fetchProduct()
-  }, [])
+  }, [params.id])
 
   return (
     <>
@@ -23,12 +23,12 @@ const ProductScreen = () => {
       </Link>
       <Row>
         <Col md={6}>
-          <Image src={product.image} alt={product.name} fluid />
+          <Image src={product.image} alt={product.Title} fluid />
         </Col>
         <Col md={3}>
           <ListGroup variant='flush'>
             <ListGroup.Item>
-              <h3>{product.name}</h3>
+              <h3>{product.Title}</h3>
             </ListGroup.Item>
             <ListGroup.Item>
               <Rating
