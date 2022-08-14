@@ -3,11 +3,12 @@ import {
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_FAIL,
 } from '../constants/orderConstants'
+import axios from 'axios'
 
-export const updateUserProfile = (user) => async (dispatch, getState) => {
+export const createOrder = (order) => async (dispatch, getState) => {
   try {
     dispatch({
-      type: USER_UPDATE_PROFILE_REQUEST,
+      type: ORDER_CREATE_REQUEST,
     })
 
     const {
@@ -21,15 +22,15 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
       },
     }
 
-    const { data } = await axios.put(`/api/users/profile`, user, config)
+    const { data } = await axios.post(`/api/orders`, order, config)
 
     dispatch({
-      type: USER_UPDATE_PROFILE_SUCCESS,
+      type: ORDER_CREATE_SUCCESS,
       payload: data,
     })
   } catch (error) {
     dispatch({
-      type: USER_UPDATE_PROFILE_FAIL,
+      type: ORDER_CREATE_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
