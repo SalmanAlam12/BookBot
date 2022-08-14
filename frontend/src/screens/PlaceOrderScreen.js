@@ -11,6 +11,11 @@ const PlaceOrderScreen = () => {
   const history = useNavigate()
   const cart = useSelector((state) => state.cart)
 
+  const current = new Date()
+  const date = `${current.getDate()}/${
+    current.getMonth() + 1
+  }/${current.getFullYear()}`
+
   cart.itemsPrice = cart.cartItems.reduce(
     (acc, item) => acc + item.price * item.qty,
     0
@@ -32,7 +37,7 @@ const PlaceOrderScreen = () => {
       //eslint - disable - next - line
       history(`/order/${order._id}`)
     }
-  }, [history, success, order._id])
+  }, [history, success])
 
   const placeOrderHandler = () => {
     dispatch(
@@ -67,6 +72,11 @@ const PlaceOrderScreen = () => {
               <h2>Payment Method</h2>
               <strong>Method: </strong>
               {cart.paymentMethod}
+              {cart.paymentMethod === 'Cash' ? (
+                <Message variant='danger'>Not Paid</Message>
+              ) : (
+                <Message variant='success'>Paid on: {date}</Message>
+              )}
             </ListGroup.Item>
 
             <ListGroup.Item>
