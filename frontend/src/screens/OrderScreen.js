@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
+import { Link, useParams } from 'react-router-dom'
+import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/message'
 import Loader from '../components/loader'
@@ -8,15 +8,14 @@ import { getOrderDetails } from '../actions/orderActions'
 
 const OrderScreen = () => {
   const dispatch = useDispatch()
-  const history = useNavigate()
   const params = useParams()
 
   const orderId = params.id
 
-  const current = new Date()
-  const date = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`
+  // const current = new Date()
+  // const date = `${current.getDate()}/${
+  //   current.getMonth() + 1
+  // }/${current.getFullYear()}`
 
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
@@ -30,7 +29,7 @@ const OrderScreen = () => {
 
   useEffect(() => {
     dispatch(getOrderDetails(orderId))
-  }, [dispatch])
+  }, [dispatch, orderId])
 
   return loading ? (
     <Loader />

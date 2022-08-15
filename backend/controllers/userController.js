@@ -91,4 +91,58 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 })
 
-export { authUser, registerUser, getUserProfile, updateUserProfile }
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({})
+  res.json(users)
+})
+
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (user) {
+    await user.remove()
+    res.json({ message: 'User Removed' })
+  } else {
+    res.status(404)
+    throw new Error('User not Found')
+  }
+})
+
+const getUserById = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id).select('-password')
+  if (user) {
+    res.json(user)
+  } else {
+    res.status(404)
+    throw new Error('User not Found')
+  }
+})
+
+const updateUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.body._id)
+
+  if (user) {
+    user.role = req.body.isAdmin || user.role
+
+    const updatedUser = await user.save()
+
+    res.json({
+      _id: updatedUser._id,
+      isAdmin: updatedUser.role,
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not Found')
+  }
+})
+
+export {
+  authUser,
+  registerUser,
+  deleteUser,
+  getUserProfile,
+  updateUserProfile,
+  getUsers,
+  getUserById,
+  updateUser,
+}
