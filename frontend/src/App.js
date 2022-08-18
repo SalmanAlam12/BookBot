@@ -45,6 +45,7 @@ const App = () => {
             />
             <Route path='/admin/productList' element={<ProductListScreen />} />
             <Route path='/cart' element={<CartScreen />} />
+            <Route path='/search/:keyword' element={<HomeScreen />} />
           </Routes>
         </Container>
       </main>

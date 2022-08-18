@@ -12,7 +12,7 @@ import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 const ProductEditScreen = () => {
   const [Title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
-  const [image, setImage] = useState('Image')
+  const [image, setImage] = useState('')
   const [Genre, setGenre] = useState('')
   const [Author, setAuthor] = useState('')
   const [Publisher, setPublisher] = useState('')
