@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Form, Button } from 'react-bootstrap'
@@ -11,12 +12,13 @@ import { PRODUCT_UPDATE_RESET } from '../constants/productConstants'
 const ProductEditScreen = () => {
   const [Title, setTitle] = useState('')
   const [price, setPrice] = useState(0)
-  const [image, setImage] = useState('')
+  const [image, setImage] = useState('Image')
   const [Genre, setGenre] = useState('')
   const [Author, setAuthor] = useState('')
   const [Publisher, setPublisher] = useState('')
   const [description, setDescription] = useState('')
   const [countInStock, setCountInStock] = useState(0)
+  const [uploading, setUploading] = useState(false)
 
   const history = useNavigate()
   const dispatch = useDispatch()
@@ -53,6 +55,26 @@ const ProductEditScreen = () => {
       }
     }
   }, [dispatch, history, productId, product, successUpdate])
+
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+      const { data } = await axios.post('/api/upload', formData, config)
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
 
   const submitHandler = (e) => {
     e.preventDefault()
@@ -112,6 +134,8 @@ const ProductEditScreen = () => {
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
               ></Form.Control>
+              <input id='image-file' type='file' onChange={uploadFileHandler} />
+              {uploading && <Loader />}
             </Form.Group>
             <Form.Group controlId='Genre'>
               <Form.Label>Genre</Form.Label>

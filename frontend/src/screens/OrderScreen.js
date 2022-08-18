@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import { Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Row, Col, ListGroup, Image, Card, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/message'
 import Loader from '../components/loader'
-import { getOrderDetails } from '../actions/orderActions'
+import { getOrderDetails, deliverOrder } from '../actions/orderActions'
+import { ORDER_DELIVER_RESET } from '../constants/orderConstants'
 
 const OrderScreen = () => {
   const dispatch = useDispatch()
   const params = useParams()
+  const history = useNavigate()
 
   const orderId = params.id
 
@@ -20,6 +22,12 @@ const OrderScreen = () => {
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
+
   if (!loading) {
     order.itemsPrice = order.orderItems.reduce(
       (acc, item) => acc + item.price * item.qty,
@@ -28,8 +36,18 @@ const OrderScreen = () => {
   }
 
   useEffect(() => {
-    dispatch(getOrderDetails(orderId))
-  }, [dispatch, orderId])
+    if (!userInfo) {
+      history('/login')
+    }
+    if (!order || successDeliver) {
+      dispatch({ type: ORDER_DELIVER_RESET })
+      dispatch(getOrderDetails(orderId))
+    }
+  }, [dispatch, orderId, successDeliver, history, order, userInfo])
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order))
+  }
 
   return loading ? (
     <Loader />
@@ -70,10 +88,10 @@ const OrderScreen = () => {
                 <strong>Method: </strong>
                 {order.paymentMethod}
               </p>
-              {order.paymentMethod === 'Cash' ? (
-                <Message variant='danger'>Not Paid</Message>
-              ) : (
+              {order.isPaid ? (
                 <Message variant='success'>Paid Successfully</Message>
+              ) : (
+                <Message variant='danger'>Not Paid</Message>
               )}
             </ListGroup.Item>
 
@@ -141,6 +159,18 @@ const OrderScreen = () => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item></ListGroup.Item>
+              {loadingDeliver && <Loader />}
+              {userInfo && userInfo.isAdmin && !order.isDelivered && (
+                <ListGroup.Item>
+                  <Button
+                    type='button'
+                    className='btn btn-black'
+                    onClick={deliverHandler}
+                  >
+                    Mark As Delivered
+                  </Button>
+                </ListGroup.Item>
+              )}
             </ListGroup>
           </Card>
         </Col>
