@@ -11,6 +11,7 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      profilePic: user.profilePic,
       isAdmin: user.role,
       token: generateToken(user._id),
     })
@@ -58,6 +59,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      profilePic: user.profilePic,
       isAdmin: user.role,
     })
   } else {
@@ -72,6 +74,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    user.profilePic = req.body.profilePic || user.profilePic
     if (req.user.password) {
       user.password = req.body.password
     }
@@ -82,6 +85,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      profilePic: updatedUser.profilePic,
       isAdmin: updatedUser.role,
       token: generateToken(user._id),
     })

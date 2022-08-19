@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Table, Form, Button, Row, Col } from 'react-bootstrap'
+import { Card, Table, Button, Row, Col, ListGroup } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/message'
@@ -11,8 +11,7 @@ import { listMyOrders } from '../actions/orderActions'
 const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [profilePic, setProfilePic] = useState('')
   const [message, setMessage] = useState(null)
 
   const history = useNavigate()
@@ -30,9 +29,6 @@ const ProfileScreen = () => {
   const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
 
-  //const [searchParams] = useSearchParams()
-  //const redirect = searchParams ? searchParams.get('redirect') : '/'
-
   useEffect(() => {
     if (!userInfo) {
       history('/login')
@@ -43,18 +39,10 @@ const ProfileScreen = () => {
       } else {
         setName(user.name)
         setEmail(user.email)
+        setProfilePic(user.profilePic)
       }
     }
   }, [dispatch, history, userInfo, user])
-
-  const submitHandler = (e) => {
-    e.preventDefault()
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match')
-    } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, password }))
-    }
-  }
 
   return (
     <Row>
@@ -64,48 +52,27 @@ const ProfileScreen = () => {
         {error && <Message variant='danger'>{error}</Message>}
         {success && <Message variant='success'>Profile Updated</Message>}
         {loading && <Loader />}
-        <Form onSubmit={submitHandler}>
-          <Form.Group controlId='name'>
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type='name'
-              placeholder='Enter Name'
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group controlId='email'>
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
-              type='email'
-              placeholder='Enter Email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group controlId='password'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Enter password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-          <Form.Group controlId='confirmpassword'>
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type='password'
-              placeholder='Confirm password'
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
-
-          <Button type='submit' variant='primary'>
-            Update
-          </Button>
-        </Form>
+        <Card
+          className='my-3 p-3 rounded'
+          style={{ width: '12vw', height: '40%' }}
+        >
+          <Card.Img
+            src={profilePic}
+            variant='top'
+            style={{ width: '10vw', height: '25vh' }}
+          />
+        </Card>
+        <ListGroup variant='flush'>
+          <ListGroup.Item>
+            <p>
+              <h2>Name: </h2> {name}
+            </p>
+            <p>
+              <h2>Email: </h2> {email}
+            </p>
+          </ListGroup.Item>
+          <Button href='/profile/edit'>Edit</Button>
+        </ListGroup>
       </Col>
       <Col md={9}>
         <h2>My orders</h2>

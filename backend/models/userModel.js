@@ -24,9 +24,6 @@ const userSchema = mongoose.Schema(
     profilePic: {
       type: String,
     },
-    address: {
-      type: String,
-    },
     contactInfo: {
       type: String,
     },
