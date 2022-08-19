@@ -124,6 +124,29 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 })
 
+const updateProductReview = asyncHandler(async (req, res) => {
+  const { reviewId, txt } = req.body
+  const product = await Product.findById(req.params.id)
+  product.reviews.map(async (review) => {
+    // console.log(`${typeof review._id}`)
+    // console.log(`${typeof reviewId}`)
+    // console.log(`${review._id.toString() === reviewId}`)
+    if (review._id.toString() === reviewId) {
+      //saveReview = review
+      //console.log(`${review.reply.replied}`)
+      review.reply.replied = true
+      review.reply.txt = txt
+      await product.save()
+      res.status(201).json({ message: 'Reply Added' })
+    }
+  })
+  //console.log(`${saveReview}`)
+  // product.saveReview.replied = true
+  // product.saveReview.txt = txt
+  // await product.save()
+  // res.status(201).json({ message: 'Reply Added' })
+})
+
 export {
   getProducts,
   getProductsById,
@@ -131,4 +154,5 @@ export {
   createProduct,
   updateProduct,
   createProductReview,
+  updateProductReview,
 }

@@ -10,6 +10,10 @@ const reviewSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    reply: {
+      replied: { type: Boolean, default: false },
+      txt: { type: String },
+    },
   },
   { timestamps: true }
 )

@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,6 +12,8 @@ import {
   createProductReview,
 } from '../actions/productActions'
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants'
+import Popup from 'reactjs-popup'
+import 'reactjs-popup/dist/index.css'
 
 const ProductScreen = () => {
   const params = useParams()
@@ -20,6 +23,8 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
+  const [txt, setTxt] = useState('')
+  //const [reviewId, setReviewId] = useState('')
 
   const productDetails = useSelector((state) => state.productDetails)
   const { loading, error, product } = productDetails
@@ -48,6 +53,21 @@ const ProductScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault()
     dispatch(createProductReview(params.id, { rating, comment }))
+  }
+
+  const replyHandler = async (reviewId) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    await axios.put(
+      `/api/products/${params.id}/reviews`,
+      { reviewId, txt },
+      config
+    )
   }
 
   return (
@@ -148,49 +168,83 @@ const ProductScreen = () => {
                     <Rating value={review.rating} />
                     <p>{review.createdAt.substring(0, 10)}</p>
                     <p>{review.comment}</p>
+                    {userInfo && userInfo.isAdmin && !review.reply.replied ? (
+                      <Popup
+                        trigger={<button>Reply</button>}
+                        position='right center'
+                      >
+                        <Form>
+                          <Form.Group controlId='txt'>
+                            <Form.Label>Reply</Form.Label>
+                            <Form.Control
+                              as='textarea'
+                              row='3'
+                              value={txt}
+                              onChange={(e) => setTxt(e.target.value)}
+                            ></Form.Control>
+                          </Form.Group>
+                          <Button
+                            size='sm'
+                            type='submit'
+                            variant='primary'
+                            onClick={() => replyHandler(review._id)}
+                          >
+                            Submit
+                          </Button>
+                        </Form>
+                      </Popup>
+                    ) : (
+                      <ListGroup.Item>
+                        <strong style={{ color: 'blue' }}>Reply: </strong>{' '}
+                        {review.reply.txt}
+                      </ListGroup.Item>
+                    )}
                   </ListGroup.Item>
                 ))}
-                <ListGroup.Item>
-                  <h2>Write a Customer Review</h2>
-                  {errorProductReview && (
-                    <Message variant='danger'>{errorProductReview}</Message>
-                  )}
-                  {userInfo ? (
-                    <Form onSubmit={submitHandler}>
-                      <Form.Group controlId='rating'>
-                        <Form.Label>Rating</Form.Label>
-                        <Form.Control
-                          as='select'
-                          value={rating}
-                          onChange={(e) => setRating(e.target.value)}
-                        >
-                          <option value=''>Select...</option>
-                          <option value='1'>1</option>
-                          <option value='2'>2</option>
-                          <option value='3'>3</option>
-                          <option value='4'>4</option>
-                          <option value='5'>5</option>
-                        </Form.Control>
-                      </Form.Group>
-                      <Form.Group controlId='comment'>
-                        <Form.Label>Comment</Form.Label>
-                        <Form.Control
-                          as='textarea'
-                          row='3'
-                          value={comment}
-                          onChange={(e) => setComment(e.target.value)}
-                        ></Form.Control>
-                      </Form.Group>
-                      <Button type='submit' variant='primary'>
-                        Submit Review
-                      </Button>
-                    </Form>
-                  ) : (
-                    <Message>
-                      Please <Link to='/login'>Sign In</Link> to write a review
-                    </Message>
-                  )}
-                </ListGroup.Item>
+                {userInfo && !userInfo.isAdmin && (
+                  <ListGroup.Item>
+                    <h2>Write a Customer Review</h2>
+                    {errorProductReview && (
+                      <Message variant='danger'>{errorProductReview}</Message>
+                    )}
+                    {userInfo ? (
+                      <Form onSubmit={submitHandler}>
+                        <Form.Group controlId='rating'>
+                          <Form.Label>Rating</Form.Label>
+                          <Form.Control
+                            as='select'
+                            value={rating}
+                            onChange={(e) => setRating(e.target.value)}
+                          >
+                            <option value=''>Select...</option>
+                            <option value='1'>1</option>
+                            <option value='2'>2</option>
+                            <option value='3'>3</option>
+                            <option value='4'>4</option>
+                            <option value='5'>5</option>
+                          </Form.Control>
+                        </Form.Group>
+                        <Form.Group controlId='comment'>
+                          <Form.Label>Comment</Form.Label>
+                          <Form.Control
+                            as='textarea'
+                            row='3'
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                          ></Form.Control>
+                        </Form.Group>
+                        <Button type='submit' variant='primary'>
+                          Submit Review
+                        </Button>
+                      </Form>
+                    ) : (
+                      <Message>
+                        Please <Link to='/login'>Sign In</Link> to write a
+                        review
+                      </Message>
+                    )}
+                  </ListGroup.Item>
+                )}
               </ListGroup>
             </Col>
           </Row>

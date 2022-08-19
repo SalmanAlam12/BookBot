@@ -18,7 +18,7 @@ const LoginScreen = () => {
   const { loading, error, userInfo } = userLogin
 
   const [searchParams] = useSearchParams()
-  const redirect = searchParams ? searchParams.get('redirect') : '/'
+  const redirect = '/'
 
   useEffect(() => {
     if (userInfo) {
