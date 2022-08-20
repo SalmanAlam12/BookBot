@@ -1,17 +1,12 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  Row,
-  Col,
-  Dropdown,
-  DropdownButton,
-  ButtonGroup,
-} from 'react-bootstrap'
+import { Row, Col, Dropdown } from 'react-bootstrap'
 import Product from '../components/Product'
 import Message from '../components/message'
 import Loader from '../components/loader'
 import { listProducts } from '../actions/productActions'
+import ProductCarousel from '../components/ProductCarousel'
 
 const HomeScreen = () => {
   const params = useParams()
@@ -27,11 +22,12 @@ const HomeScreen = () => {
 
   return (
     <>
+      {!keyword && <ProductCarousel />}
       <Row>
-        <Col sm={10}>
+        <Col sm={11}>
           <h1>Latest Products</h1>
         </Col>
-        <Col sm={2}>
+        <Col sm={1}>
           <div className='mb-2' style={{ margin: '16px' }}>
             <Dropdown>
               <Dropdown.Toggle

@@ -164,6 +164,11 @@ const updateProductReview = asyncHandler(async (req, res) => {
   // res.status(201).json({ message: 'Reply Added' })
 })
 
+const getTopProducts = asyncHandler(async (req, res) => {
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3)
+  res.json(products)
+})
+
 export {
   getProducts,
   getProductsById,
@@ -172,4 +177,5 @@ export {
   updateProduct,
   createProductReview,
   updateProductReview,
+  getTopProducts,
 }
