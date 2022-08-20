@@ -1,18 +1,27 @@
 import React, { useState } from 'react'
 import { Form, Button, Row, Col } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const SearchBox = () => {
   const history = useNavigate()
+  const location = useLocation()
 
   const [keyword, setKeyword] = useState('')
 
   const submitHandler = (e) => {
     e.preventDefault()
     if (keyword.trim()) {
-      history(`/search/${keyword}`)
+      if (location.pathname === '/') {
+        history(`/search/homefilter/${keyword}`)
+      } else {
+        history(`/search/adminfilter/${keyword}`)
+      }
     } else {
-      history('/')
+      if (location.pathname.slice(0, 18) === '/search/homefilter') {
+        history('/')
+      } else {
+        history('/admin/productList')
+      }
     }
   }
 

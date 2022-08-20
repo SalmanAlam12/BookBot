@@ -39,7 +39,7 @@ const OrderScreen = () => {
     if (!userInfo) {
       history('/login')
     }
-    if (!order || successDeliver) {
+    if (!order || successDeliver || order._id !== orderId) {
       dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(orderId))
     }

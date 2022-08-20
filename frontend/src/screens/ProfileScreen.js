@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/message'
 import Loader from '../components/loader'
-import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { getUserDetails } from '../actions/userActions'
 import { listMyOrders } from '../actions/orderActions'
 
 const ProfileScreen = () => {
@@ -42,7 +42,7 @@ const ProfileScreen = () => {
         setProfilePic(user.profilePic)
       }
     }
-  }, [dispatch, history, userInfo, user])
+  }, [dispatch, history, userInfo, user, orders])
 
   return (
     <Row>

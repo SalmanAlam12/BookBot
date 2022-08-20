@@ -16,6 +16,7 @@ const ProductListScreen = () => {
   const params = useParams()
   const dispatch = useDispatch()
   const history = useNavigate()
+  const keyword = params.keyword
 
   const productList = useSelector((state) => state.productList)
   const { loading, error, products } = productList
@@ -44,11 +45,19 @@ const ProductListScreen = () => {
       history('/login')
     }
     if (successCreate) {
-      history(`/admin/product/${createProduct._id}/edit`)
+      history(`/admin/product/${createdProduct._id}/edit`)
     } else {
-      dispatch(listProducts())
+      dispatch(listProducts(keyword))
     }
-  }, [dispatch, history, userInfo, successDelete, successCreate, createProduct])
+  }, [
+    dispatch,
+    history,
+    userInfo,
+    successDelete,
+    successCreate,
+    createdProduct,
+    keyword,
+  ])
 
   const deleteHandler = (id) => {
     if (window.confirm('Do you want to delete this product')) {

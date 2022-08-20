@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavLink, NavDropdown } from 'react-bootstrap'
@@ -9,6 +9,7 @@ import SearchBox from './SearchBox'
 const Header = () => {
   const dispatch = useDispatch()
   const history = useNavigate()
+  const location = useLocation()
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
@@ -67,7 +68,14 @@ const Header = () => {
                 </NavDropdown>
               )}
             </Nav>
-            <SearchBox />
+            {location.pathname === '/' ||
+            location.pathname === '/admin/productList' ||
+            location.pathname.slice(0, 18) === '/search/homefilter' ||
+            location.pathname.slice(0, 19) === '/search/adminfilter' ? (
+              <SearchBox />
+            ) : (
+              <></>
+            )}
           </Navbar.Collapse>
         </Container>
       </Navbar>
