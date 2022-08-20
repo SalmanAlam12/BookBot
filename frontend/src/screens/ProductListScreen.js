@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, NavLink } from 'react-router-dom'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -73,9 +73,35 @@ const ProductListScreen = () => {
     <>
       <Row>
         <Col>
-          <h1>Products</h1>
+          <h1>
+            <a href='/admin/productList' style={{ 'text-decoration': 'none' }}>
+              Products
+            </a>
+          </h1>
         </Col>
-        <Col className='d-flex justify-content-end'>
+        <Col xs lg='1'>
+          <div style={{ margin: '20px' }}>
+            <Button
+              variant='success'
+              className='btn-sm'
+              href='/search/adminfilter/InStock'
+            >
+              InStock
+            </Button>
+          </div>
+        </Col>
+        <Col xs lg='2'>
+          <div style={{ margin: '20px' }}>
+            <Button
+              variant='danger'
+              className='btn-sm'
+              href='/search/adminfilter/OutStock'
+            >
+              OutStock
+            </Button>
+          </div>
+        </Col>
+        <Col xs lg='2'>
           <Button className='my-3' onClick={createProductHandler}>
             <i className='fas fa-plus'></i> <>New Product</>
           </Button>
@@ -95,9 +121,9 @@ const ProductListScreen = () => {
             <tr>
               <th>ID</th>
               <th>TITLE</th>
-              <th>PRICE</th>
               <th>AUTHOR</th>
               <th>STOCK</th>
+              <th>PRICE</th>
             </tr>
           </thead>
           <tbody>
@@ -105,9 +131,9 @@ const ProductListScreen = () => {
               <tr key={product._id}>
                 <td>{product._id}</td>
                 <td>{product.Title}</td>
-                <td>${product.price}</td>
                 <td>{product.Author}</td>
                 <td>{product.countInStock}</td>
+                <td>${product.price}</td>
                 <td>
                   <LinkContainer to={`/admin/product/${product._id}/edit`}>
                     <Button variant='light' className='btn-sm'>

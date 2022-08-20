@@ -3,16 +3,33 @@ import Product from '../models/productModel.js'
 
 const getProducts = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword ? req.query.keyword : ''
-
   const products = await Product.find({})
-  const result = products.filter(
-    (product) =>
-      product.Title.toLowerCase().includes(keyword.toLowerCase()) ||
-      product.Author.toLowerCase().includes(keyword.toLowerCase()) ||
-      product.Genre.toLowerCase().includes(keyword.toLowerCase()) ||
-      product._id.toString().includes(keyword)
-  )
-  res.json(result)
+
+  if (keyword === 'descending') {
+    const result = products.sort((a, b) => b.price - a.price)
+    res.json(result)
+  } else if (keyword === 'ascending') {
+    const result = products.sort((a, b) => a.price - b.price)
+    res.json(result)
+  } else if (keyword === 'highestRated') {
+    const result = products.sort((a, b) => b.rating - a.rating)
+    res.json(result)
+  } else if (keyword === 'InStock') {
+    const result = products.filter((product) => product.countInStock > 0)
+    res.json(result)
+  } else if (keyword === 'OutStock') {
+    const result = products.filter((product) => product.countInStock === 0)
+    res.json(result)
+  } else {
+    const result = products.filter(
+      (product) =>
+        product.Title.toLowerCase().includes(keyword.toLowerCase()) ||
+        product.Author.toLowerCase().includes(keyword.toLowerCase()) ||
+        product.Genre.toLowerCase().includes(keyword.toLowerCase()) ||
+        product._id.toString().includes(keyword)
+    )
+    res.json(result)
+  }
 })
 
 const getProductsById = asyncHandler(async (req, res) => {
