@@ -12,7 +12,8 @@ const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [profilePic, setProfilePic] = useState('')
-  const [message, setMessage] = useState(null)
+  const [contactInfo, setContactInfo] = useState('')
+  const [message] = useState(null)
 
   const history = useNavigate()
   const dispatch = useDispatch()
@@ -35,31 +36,32 @@ const ProfileScreen = () => {
     } else {
       if (!user.name) {
         dispatch(getUserDetails('profile'))
-        dispatch(listMyOrders())
       } else {
         setName(user.name)
         setEmail(user.email)
         setProfilePic(user.profilePic)
+        setContactInfo(user.contactInfo)
       }
+      dispatch(listMyOrders())
     }
-  }, [dispatch, history, userInfo, user, orders])
+  }, [dispatch, history, userInfo, user])
 
   return (
     <Row>
       <Col md={3}>
-        <h2>User Profile</h2>
+        <h2>Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
         {error && <Message variant='danger'>{error}</Message>}
         {success && <Message variant='success'>Profile Updated</Message>}
         {loading && <Loader />}
         <Card
           className='my-3 p-3 rounded'
-          style={{ width: '12vw', height: '40%' }}
+          style={{ width: '18vw', height: '40%' }}
         >
           <Card.Img
             src={profilePic}
             variant='top'
-            style={{ width: '10vw', height: '25vh' }}
+            style={{ width: '16vw', height: '28vh' }}
           />
         </Card>
         <ListGroup variant='flush'>
@@ -70,8 +72,13 @@ const ProfileScreen = () => {
             <p>
               <h2>Email: </h2> {email}
             </p>
+            <p>
+              <h2>Contact No: </h2> {contactInfo}
+            </p>
           </ListGroup.Item>
-          <Button href='/profile/edit'>Edit</Button>
+          <Button href='/profile/edit' size='md'>
+            Edit
+          </Button>
         </ListGroup>
       </Col>
       <Col md={9}>

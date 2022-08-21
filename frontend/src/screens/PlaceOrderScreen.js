@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import { createOrder } from '../actions/orderActions'
+import { CART_CLEAR_METHOD } from '../constants/cartConstants'
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch()
@@ -16,7 +17,7 @@ const PlaceOrderScreen = () => {
     0
   )
 
-  cart.deliveryPrice = cart.itemsPrice > 100 ? 0 : 100
+  cart.deliveryPrice = cart.itemsPrice > 50 ? 0 : 50
   cart.taxPrice = Number((0.15 * cart.itemsPrice).toFixed(2))
   cart.totalPrice = (
     Number(cart.itemsPrice) +
@@ -29,9 +30,9 @@ const PlaceOrderScreen = () => {
 
   useEffect(() => {
     if (success) {
-      //eslint - disable - next - line
+      dispatch({ type: CART_CLEAR_METHOD })
       history(`/order/${order._id}`)
-    }
+    } //eslint-disable-next-line
   }, [history, success])
 
   const placeOrderHandler = () => {

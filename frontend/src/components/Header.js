@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Navbar, Nav, Container, NavLink, NavDropdown } from 'react-bootstrap'
 import { logout } from '../actions/userActions'
 import SearchBox from './SearchBox'
+import { CART_CLEAR_METHOD } from '../constants/cartConstants'
 
 const Header = () => {
   const dispatch = useDispatch()
@@ -16,6 +17,7 @@ const Header = () => {
 
   const logoutHandler = () => {
     dispatch(logout())
+    dispatch({ type: CART_CLEAR_METHOD })
     history('/')
   }
 

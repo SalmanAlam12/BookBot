@@ -11,6 +11,7 @@ import { listMyOrders } from '../actions/orderActions'
 const ProfileScreen = () => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [contactInfo, setContactInfo] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [message, setMessage] = useState(null)
@@ -40,6 +41,7 @@ const ProfileScreen = () => {
         setName(user.name)
         setEmail(user.email)
         setProfilePic(user.profilePic)
+        setContactInfo(user.contactInfo)
       }
     }
   }, [dispatch, history, userInfo, user])
@@ -70,7 +72,14 @@ const ProfileScreen = () => {
       setMessage('Passwords do not match')
     } else {
       dispatch(
-        updateUserProfile({ id: user._id, name, email, password, profilePic })
+        updateUserProfile({
+          id: user._id,
+          name,
+          email,
+          contactInfo,
+          password,
+          profilePic,
+        })
       )
       history('/profile')
     }
@@ -82,7 +91,7 @@ const ProfileScreen = () => {
         <Col xs={4}>
           <Card
             className='my-3 p-3 rounded'
-            style={{ width: '22vw', height: '80%' }}
+            style={{ width: '22vw', height: '60%' }}
           >
             <Card.Img
               src={profilePic}
@@ -93,7 +102,7 @@ const ProfileScreen = () => {
         </Col>
 
         <Col xs={5}>
-          <h2>User Profile</h2>
+          <h2>Update Profile Information</h2>
           {message && <Message variant='danger'>{message}</Message>}
           {error && <Message variant='danger'>{error}</Message>}
           {success && <Message variant='success'>Profile Updated</Message>}
@@ -115,6 +124,15 @@ const ProfileScreen = () => {
                 placeholder='Enter Email'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId='contactInfo'>
+              <Form.Label>Contact No:</Form.Label>
+              <Form.Control
+                type='contactInfo'
+                placeholder='Enter Phone No:'
+                value={contactInfo}
+                onChange={(e) => setContactInfo(e.target.value)}
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId='password'>

@@ -82,23 +82,43 @@ const ProductScreen = () => {
       ) : (
         <>
           <Row>
-            <Col md={6}>
-              <Image src={product.image} alt={product.Title} fluid />
+            <Col md={5}>
+              <Image
+                src={product.image}
+                alt={product.Title}
+                fluid
+                style={{
+                  width: '35vw',
+                  height: '70vh',
+                }}
+              />
             </Col>
-            <Col md={3}>
+            <Col md={4}>
               <ListGroup variant='flush'>
                 <ListGroup.Item>
                   <h3>{product.Title}</h3>
+                  <strong>Author: {product.Author}</strong>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Rating
                     value={product.rating}
                     text={`${product.numReviews} reviews`}
+                    color='darkblue'
                   />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: {product.price}</ListGroup.Item>
                 <ListGroup.Item>
-                  Description: {product.description}
+                  <strong style={{ color: 'maroon' }}>Price: </strong>$
+                  {product.price}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong style={{ color: 'maroon' }}>Genre: </strong>
+                  {product.Genre},{' '}
+                  <strong style={{ color: 'maroon' }}>Publisher: </strong>{' '}
+                  {product.Publisher}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <h3>Description: </h3>
+                  {product.description}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
@@ -157,6 +177,8 @@ const ProductScreen = () => {
               </Card>
             </Col>
           </Row>
+          <br></br>
+          <br></br>
           <Row>
             <Col md={6}>
               <h2>Reviews</h2>
@@ -165,7 +187,7 @@ const ProductScreen = () => {
                 {product.reviews.map((review) => (
                   <ListGroup.Item key={review._id}>
                     <strong>{review.name}</strong>
-                    <Rating value={review.rating} />
+                    <Rating value={review.rating} color='darkblue' />
                     <p>{review.createdAt.substring(0, 10)}</p>
                     <p>{review.comment}</p>
                     {userInfo && userInfo.isAdmin && !review.reply.replied ? (
@@ -193,11 +215,15 @@ const ProductScreen = () => {
                           </Button>
                         </Form>
                       </Popup>
-                    ) : (
+                    ) : review.reply.replied ? (
                       <ListGroup.Item>
-                        <strong style={{ color: 'blue' }}>Reply: </strong>{' '}
+                        <strong style={{ color: 'blue' }}>
+                          Seller Reply:{' '}
+                        </strong>{' '}
                         {review.reply.txt}
                       </ListGroup.Item>
+                    ) : (
+                      <></>
                     )}
                   </ListGroup.Item>
                 ))}
@@ -233,6 +259,7 @@ const ProductScreen = () => {
                             onChange={(e) => setComment(e.target.value)}
                           ></Form.Control>
                         </Form.Group>
+                        <br></br>
                         <Button type='submit' variant='primary'>
                           Submit Review
                         </Button>

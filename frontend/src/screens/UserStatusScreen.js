@@ -62,10 +62,14 @@ const UserStatusScreen = () => {
               {loadingUpdate && <Loader />}
               {errorUpdate && <Message variant='danger'>{errorUpdate}</Message>}
               <p>
-                <strong>Name: </strong> {name}
+                <strong style={{ color: 'darkblue' }}>User ID: </strong>{' '}
+                {userId}
               </p>
               <p>
-                <strong>Email: </strong> {email}
+                <strong style={{ color: 'darkblue' }}>Name: </strong> {name}
+              </p>
+              <p>
+                <strong style={{ color: 'darkblue' }}>Email: </strong> {email}
               </p>
             </ListGroup.Item>
             <ListGroup.Item>

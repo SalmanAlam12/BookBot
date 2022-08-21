@@ -11,6 +11,7 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      contactInfo: user.contactInfo,
       profilePic: user.profilePic,
       isAdmin: user.role,
       token: generateToken(user._id),
@@ -22,7 +23,7 @@ const authUser = asyncHandler(async (req, res) => {
 })
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body
+  const { name, email, contactInfo, password } = req.body
 
   const userExists = await User.findOne({ email })
 
@@ -34,6 +35,7 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
+    contactInfo,
     password,
   })
 
@@ -42,6 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      contactInfo: user.contactInfo,
       isAdmin: user.role,
       token: generateToken(user._id),
     })
@@ -59,6 +62,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      contactInfo: user.contactInfo,
       profilePic: user.profilePic,
       isAdmin: user.role,
     })
@@ -74,6 +78,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
+    user.contactInfo = req.body.contactInfo || user.contactInfo
     user.profilePic = req.body.profilePic || user.profilePic
     if (req.user.password) {
       user.password = req.body.password
@@ -85,6 +90,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      contactInfo: user.contactInfo,
       profilePic: updatedUser.profilePic,
       isAdmin: updatedUser.role,
       token: generateToken(user._id),

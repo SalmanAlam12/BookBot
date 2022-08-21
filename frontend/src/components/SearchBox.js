@@ -13,11 +13,15 @@ const SearchBox = () => {
     if (keyword.trim()) {
       if (location.pathname === '/') {
         history(`/search/homefilter/${keyword}`)
+      } else if (location.pathname.slice(0, 18) === '/search/homefilter') {
+        history(`/search/homefilter/${keyword}`)
       } else {
         history(`/search/adminfilter/${keyword}`)
       }
     } else {
       if (location.pathname.slice(0, 18) === '/search/homefilter') {
+        history('/')
+      } else if (location.pathname === '/') {
         history('/')
       } else {
         history('/admin/productList')

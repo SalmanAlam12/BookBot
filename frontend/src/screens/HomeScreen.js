@@ -25,7 +25,7 @@ const HomeScreen = () => {
       {!keyword && <ProductCarousel />}
       <Row>
         <Col sm={11}>
-          <h1>Latest Products</h1>
+          <h1 style={{ color: 'sienna' }}>BookBot Library</h1>
         </Col>
         <Col sm={1}>
           <div className='mb-2' style={{ margin: '16px' }}>
@@ -35,7 +35,7 @@ const HomeScreen = () => {
                 id='dropdown-basic'
                 size='sm'
               >
-                Sort
+                Filter
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item href='/search/homefilter/descending'>

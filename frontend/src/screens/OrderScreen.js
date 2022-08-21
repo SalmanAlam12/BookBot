@@ -14,11 +14,6 @@ const OrderScreen = () => {
 
   const orderId = params.id
 
-  // const current = new Date()
-  // const date = `${current.getDate()}/${
-  //   current.getMonth() + 1
-  // }/${current.getFullYear()}`
-
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
 

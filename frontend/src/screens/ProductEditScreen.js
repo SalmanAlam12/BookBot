@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Card, Form, Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/message'
 import Loader from '../components/loader'
@@ -132,6 +132,7 @@ const ProductEditScreen = () => {
               <input id='image-file' type='file' onChange={uploadFileHandler} />
               {uploading && <Loader />}
             </Form.Group>
+            <br></br>
             <Form.Group controlId='Genre'>
               <Form.Label>Genre</Form.Label>
               <Form.Control
@@ -177,6 +178,7 @@ const ProductEditScreen = () => {
                 onChange={(e) => setCountInStock(e.target.value)}
               ></Form.Control>
             </Form.Group>
+            <br></br>
             <Button type='submit' variant='primary'>
               update
             </Button>
