@@ -26,7 +26,9 @@ const Header = () => {
       <Navbar bg='dark' expand='lg' variant='dark'>
         <Container fluid>
           <LinkContainer to='/'>
-            <Navbar.Brand>BookBot</Navbar.Brand>
+            <Navbar.Brand>
+              <strong className='animate-charcter'>BookBot</strong>
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='navbarScroll' />
           <Navbar.Collapse id='navbarScroll'>

@@ -50,7 +50,7 @@ const UserStatusScreen = () => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
-      <h1>Update User Status</h1>
+      <h1 style={{ 'text-align': 'center' }}>Update User Status</h1>
       <Link to='/admin/userList' className='btn btn-light my-3'>
         Go Back
       </Link>
@@ -77,7 +77,7 @@ const UserStatusScreen = () => {
                 <Form.Group controlId='isadmin'>
                   <Form.Check
                     type='checkbox'
-                    label='isadmin'
+                    label='Make Admin'
                     checked={isAdmin}
                     onChange={(e) => setIsAdmin(e.target.checked)}
                   ></Form.Check>
