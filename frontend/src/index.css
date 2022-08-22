@@ -63,16 +63,16 @@ h2{
 
 .carousel {
     width:1300px;
-    height:450px;
-    margin: 20px auto;
+    height:550px;
+    margin: 10px auto;
   }
 
 .carousel img {
     width:1600px;
-    height: 400px;
-    padding: 50px 20px;
-    margin: 30px auto;
-    border-radius: 50%;
+    height: 500px;
+    padding: 5px 5px;
+    margin: 5px auto;
+    border-radius: 0%;
     top: 0;
 }
 

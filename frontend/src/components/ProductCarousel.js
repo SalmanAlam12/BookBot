@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Carousel, Image } from 'react-bootstrap'
 import Loader from './loader'
@@ -10,7 +9,7 @@ const ProductCarousel = () => {
   const dispatch = useDispatch()
 
   const productTopRated = useSelector((state) => state.productTopRated)
-  const { loading, error, products } = productTopRated
+  const { loading, error } = productTopRated
 
   useEffect(() => {
     dispatch(listTopProducts())
@@ -22,23 +21,46 @@ const ProductCarousel = () => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <Carousel pause='hover' className='bg-dark'>
-      {products.map((product) => (
-        <Carousel.Item key={product._id}>
-          <Link to={`/product/${product._id}`}>
-            <Image
-              className='d-block w-50'
-              src={product.image}
-              alt={product.Title}
-              fluid
-            />
-          </Link>
-          <Carousel.Caption className='carousel-caption'>
-            <h1>
-              {product.Title} (${product.price})
-            </h1>
-          </Carousel.Caption>
-        </Carousel.Item>
-      ))}
+      <Carousel.Item>
+        <Image
+          className='d-block w-100'
+          src='/uploads\promo-sale-banner-library-bookshop-260nw-1790872166.jpg'
+          alt='first Slide'
+          fluid
+        />
+      </Carousel.Item>
+      <Carousel.Item>
+        <Image
+          className='d-block w-100'
+          src='/uploads\John-Locke-Quote-Reading-furnishes-the-mind-only-with-materials-of.jpg'
+          alt='second Slide'
+          fluid
+        />
+      </Carousel.Item>
+      <Carousel.Item>
+        <Image
+          className='d-block w-100'
+          src='/uploads\photo-1507842217343-583bb7270b66.jpeg'
+          alt='third Slide'
+          fluid
+        />
+      </Carousel.Item>
+      <Carousel.Item>
+        <Image
+          className='d-block w-100'
+          src='/uploads\poster.jpg'
+          alt='fourth Slide'
+          fluid
+        />
+      </Carousel.Item>
+      <Carousel.Item>
+        <Image
+          className='d-block w-100'
+          src='/uploads\b4UFkt.webp'
+          alt='fifth Slide'
+          fluid
+        />
+      </Carousel.Item>
     </Carousel>
   )
 }
