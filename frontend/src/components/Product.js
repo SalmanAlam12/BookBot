@@ -8,7 +8,7 @@ const Product = ({ product }) => {
   return (
     <Card
       className='my-3 p-3 rounded card'
-      style={{ height: '95%' }}
+      style={{ height: '90%' }}
       border='dark'
     >
       <Link to={`/product/${product._id}`}>
@@ -16,7 +16,7 @@ const Product = ({ product }) => {
           src={product.image}
           variant='top'
           style={{
-            width: '17vw',
+            width: '100%',
             height: '35vh',
             margin: '5px',
           }}
