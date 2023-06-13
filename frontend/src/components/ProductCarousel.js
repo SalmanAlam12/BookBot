@@ -24,7 +24,7 @@ const ProductCarousel = () => {
       <Carousel.Item>
         <Image
           className='d-block w-100'
-          src='/uploads\promo-sale-banner-library-bookshop-260nw-1790872166.jpg'
+          src='/uploads/promo-sale-banner-library-bookshop-260nw-1790872166.jpg'
           alt='first Slide'
           fluid
         />
@@ -32,7 +32,7 @@ const ProductCarousel = () => {
       <Carousel.Item>
         <Image
           className='d-block w-100'
-          src='/uploads\John-Locke-Quote-Reading-furnishes-the-mind-only-with-materials-of.jpg'
+          src='/uploads/John-Locke-Quote-Reading-furnishes-the-mind-only-with-materials-of.jpg'
           alt='second Slide'
           fluid
         />
@@ -40,7 +40,7 @@ const ProductCarousel = () => {
       <Carousel.Item>
         <Image
           className='d-block w-100'
-          src='/uploads\photo-1507842217343-583bb7270b66.jpeg'
+          src='/uploads/photo-1507842217343-583bb7270b66.jpeg'
           alt='third Slide'
           fluid
         />
@@ -48,7 +48,7 @@ const ProductCarousel = () => {
       <Carousel.Item>
         <Image
           className='d-block w-100'
-          src='/uploads\poster.jpg'
+          src='/uploads/poster.jpg'
           alt='fourth Slide'
           fluid
         />
@@ -56,7 +56,7 @@ const ProductCarousel = () => {
       <Carousel.Item>
         <Image
           className='d-block w-100'
-          src='/uploads\b4UFkt.webp'
+          src='/uploads/b4UFkt.webp'
           alt='fifth Slide'
           fluid
         />
