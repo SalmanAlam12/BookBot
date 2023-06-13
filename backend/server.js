@@ -1,6 +1,7 @@
 import path from 'path'
 import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
 import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 import connectDB from './config/db.js'
 import productRoutes from './routes/productRoutes.js'
@@ -13,6 +14,12 @@ dotenv.config()
 connectDB()
 
 const app = express()
+
+app.use(
+  cors({
+    origin: ['https://bookbotclient.onrender.com'],
+  })
+)
 
 app.use(express.json())
 
